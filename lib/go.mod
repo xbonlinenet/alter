@@ -1,4 +1,4 @@
-module github.com/xbonlinenet/alter
+module github.com/xbonlinenet/alter/lib
 
 go 1.12
 
