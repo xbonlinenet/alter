@@ -113,3 +113,27 @@ func (client *WechatChannel) SendMessage(users []string, msg string) error {
 	resp.Body.Close()
 	return nil
 }
+
+// SendGroup 通过企业微信机器人 发送消息
+func (client *WechatChannel) SendGroup(url string, msg string) error {
+	type Payload struct {
+		MSGType string         `json:"msgtype"`
+		Text    TextMsgContent `json:"text"`
+	}
+	payload := &Payload{
+		MSGType: "text",
+		Text:    TextMsgContent{Content: msg},
+	}
+	body, err := json.MarshalIndent(payload, "", "")
+
+	resp, err := httpClient.Post(url, "application/json; encoding=utf-8", bytes.NewReader(body))
+	if err != nil {
+		return err
+	}
+
+	if err != nil {
+		return err
+	}
+	resp.Body.Close()
+	return nil
+}
