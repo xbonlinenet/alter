@@ -13,7 +13,7 @@ const (
 type DingDingChannel struct {
 }
 
-func (d *DingDingChannel) SendMessage(users []string, msg string) error {
+func (d *DingDingChannel) SendMessage(users []string, robotUrls []string, msg string) error {
 
 	title := fmt.Sprintf("To:%s", strings.Join(users, ", "))
 	url := fmt.Sprintf("%s?party=%d&title=%s&content=%s&angentid=%d", DingDingUrl, 5, title, url.QueryEscape(msg), 1000009)

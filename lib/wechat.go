@@ -86,7 +86,7 @@ func (client *WechatChannel) fetchAccessToken() {
 }
 
 // SendMessage 发送消息给制定用户列表
-func (client *WechatChannel) SendMessage(users []string, msg string) error {
+func (client *WechatChannel) SendMessage(users []string, robotUrls []string, msg string) error {
 	client.fetchAccessToken()
 
 	toUser := strings.Join(users, "|")
@@ -111,6 +111,12 @@ func (client *WechatChannel) SendMessage(users []string, msg string) error {
 		return err
 	}
 	resp.Body.Close()
+	// 发送到机器人
+	if len(robotUrls) > 0 {
+		for _, url := range robotUrls {
+			client.SendGroup(url, msg)
+		}
+	}
 	return nil
 }
 
@@ -127,10 +133,6 @@ func (client *WechatChannel) SendGroup(url string, msg string) error {
 	body, err := json.MarshalIndent(payload, "", "")
 
 	resp, err := httpClient.Post(url, "application/json; encoding=utf-8", bytes.NewReader(body))
-	if err != nil {
-		return err
-	}
-
 	if err != nil {
 		return err
 	}

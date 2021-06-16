@@ -1,5 +1,5 @@
 package lib
 
 type Channel interface {
-	SendMessage(users []string, msg string) error
+	SendMessage(users []string, robotUrls []string, msg string) error
 }

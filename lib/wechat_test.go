@@ -11,8 +11,9 @@ func TestWechatClient_SendMessage(t *testing.T) {
 		accessToken   string
 	}
 	type args struct {
-		users []string
-		msg   string
+		users     []string
+		robotUrls []string
+		msg       string
 	}
 	tests := []struct {
 		name    string
@@ -43,7 +44,7 @@ func TestWechatClient_SendMessage(t *testing.T) {
 				tokenExpireAt: tt.fields.tokenExpireAt,
 				accessToken:   tt.fields.accessToken,
 			}
-			if err := client.SendMessage(tt.args.users, tt.args.msg); (err != nil) != tt.wantErr {
+			if err := client.SendMessage(tt.args.users, tt.args.robotUrls, tt.args.msg); (err != nil) != tt.wantErr {
 				t.Errorf("WechatChannel.SendMessage() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})

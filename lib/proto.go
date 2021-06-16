@@ -4,12 +4,14 @@ import "encoding/json"
 
 // ErrorMessage 错误信息
 type ErrorMessage struct {
-	Host    string   `json:"host"`
-	Server  string   `json:"server"`
-	Users   []string `json:"users"`
-	ErrorID string   `json:"error_id"`
-	Message string   `json:"message"`
-	Detail  string   `json:"detail"`
+	Host           string   `json:"host"`
+	Server         string   `json:"server"`
+	Users          []string `json:"users"`
+	RobotUrls      []string `json:"robot_urls"`
+	AlterThreshold int      `json:"alter_threshold"`
+	ErrorID        string   `json:"error_id"`
+	Message        string   `json:"message"`
+	Detail         string   `json:"detail"`
 }
 
 // DecodeErrorMessage 反序列化

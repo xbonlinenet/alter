@@ -9,33 +9,36 @@ import (
 
 // Client 微信报警客户端
 type Client struct {
-	client redis.Cmdable
-	server string
-	users  []string
-	host   string
+	client    redis.Cmdable
+	server    string
+	users     []string
+	robotUrls []string
+	host      string
 }
 
 // NewClient 创建新的客户端
-func NewClient(client redis.Cmdable, users []string, server string) (*Client, error) {
+func NewClient(client redis.Cmdable, users, robotUrls []string, server string) (*Client, error) {
 
 	host := GetOutboundIP().String()
 	return &Client{
-		client: client,
-		server: server,
-		users:  users,
-		host:   host,
+		client:    client,
+		server:    server,
+		users:     users,
+		robotUrls: robotUrls,
+		host:      host,
 	}, nil
 }
 
 // AlterUsers 发送报警信息到统一报警平台
 func (c *Client) AlterUsers(users []string, message string, detail string, errorID string) error {
 	errMessage := ErrorMessage{
-		Host:    c.host,
-		Server:  c.server,
-		Users:   users,
-		ErrorID: errorID,
-		Message: message,
-		Detail:  detail,
+		Host:      c.host,
+		Server:    c.server,
+		Users:     users,
+		RobotUrls: c.robotUrls,
+		ErrorID:   errorID,
+		Message:   message,
+		Detail:    detail,
 	}
 
 	strMessage, err := EncodeErrorMessage(errMessage)
