@@ -17,8 +17,7 @@ type Client struct {
 }
 
 // NewClient 创建新的客户端
-func NewClient(client redis.Cmdable, users, robotUrls []string, server string) (*Client, error) {
-
+func NewClientV2(client redis.Cmdable, users, robotUrls []string, server string) (*Client, error) {
 	host := GetOutboundIP().String()
 	return &Client{
 		client:    client,
@@ -26,6 +25,15 @@ func NewClient(client redis.Cmdable, users, robotUrls []string, server string) (
 		users:     users,
 		robotUrls: robotUrls,
 		host:      host,
+	}, nil
+}
+func NewClient(client redis.Cmdable, users []string, server string) (*Client, error) {
+	host := GetOutboundIP().String()
+	return &Client{
+		client: client,
+		server: server,
+		users:  users,
+		host:   host,
 	}, nil
 }
 
